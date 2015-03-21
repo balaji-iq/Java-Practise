@@ -3,7 +3,7 @@ package com.balaji.algorithms.sorting;
 import com.balaji.methods.Swap;
 
 /**
- * Class to implement bubble sort.
+ * Class to implement insertion sort.
  * @author Balaji Rayakota.
  */
 public class BubbleSort {
@@ -12,7 +12,7 @@ public class BubbleSort {
 	 * @param input an integer array which is supposed to be sorted, can be null or empty.
 	 * @return an array of integers output such that output[i] <= output[i+1] for all i E [0, output.length), output can be null.
 	 */
-	public static int[] sort(int[] input) {
+	public static int[] insertionSort(int[] input) {
 		// If input is null return null.
 		if (input == null) {
 			return null;
