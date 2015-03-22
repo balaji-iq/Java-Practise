@@ -1,5 +1,7 @@
 package com.balaji.algorithms.sorting;
 
+import java.util.Arrays;
+
 /**
  * Implementation of Merge Sort.
  * @author Balaji Rayakota.
@@ -25,7 +27,7 @@ public class MergeSort {
 	 * @param lo starting index.
 	 * @param hi ending index.
 	 */
-	private static void sort(int[] input, int[] aux, int lo, int hi) {
+	public static void sort(int[] input, int[] aux, int lo, int hi) {
 		if (hi <= lo)
 			return;
 		
@@ -49,6 +51,7 @@ public class MergeSort {
 			aux[index] = input[index];
 		
 		int i = lo, j = mid+1;
+		// Invariants: 1. input[lo..k] is sorted.
 		for(int k = lo; k <= hi; k++) {
 			if (i > mid)
 				input[k] = aux[j++];
@@ -59,5 +62,23 @@ public class MergeSort {
 			else
 				input[k] = aux[j++];
 		}
+	}
+	
+	/**
+	 * Testing.
+	 * @param args the command line arguments.
+	 */
+	public static void main(String[] args) {
+		int[] a = null;
+		sort(a);
+		System.out.println(Arrays.toString(a));
+		
+		int[] b = {};
+		sort(b);
+		System.out.println(Arrays.toString(b));
+		
+		int[] c = {3, 18, -12, 22, 43, 1012, 9, 18, 3, 22, 43, 18, 25};
+		sort(c);
+		System.out.println(Arrays.toString(c));
 	}
 }

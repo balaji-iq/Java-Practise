@@ -14,6 +14,11 @@ import com.balaji.methods.Swap;
 public class QuickSort {
 	private static Random rand = new Random();
 
+	/**
+	 * sort input array.
+	 * 
+	 * @param input an integer array, can be null or empty.
+	 */
 	public static void sort(int[] input) {
 		if (input != null)
 			sort(input, 0, input.length - 1);
@@ -34,9 +39,9 @@ public class QuickSort {
 			throw new IllegalArgumentException(
 					"arguments lo and hi lie outside input array");
 
-		int randomPivot = lo + rand.nextInt(hi-lo);
+		int randomPivot = lo + rand.nextInt(hi - lo);
 		Swap.swap(input, lo, randomPivot);
-		
+
 		int index = partition(input, lo, hi);
 		sort(input, lo, index - 1);
 		sort(input, index + 1, hi);
@@ -95,6 +100,74 @@ public class QuickSort {
 	}
 
 	/**
+	 * Sorts input array.
+	 * 
+	 * @param input an integer array, can be null or empty.
+	 */
+	public static void sort2(int[] input) {
+		if (input != null)
+			sort2(input, 0, input.length - 1);
+	}
+
+	/**
+	 * Sorts input[lo..hi] provided lo and hi lie inside the array and hi >= lo.
+	 * 
+	 * @param input an integer array, can be null or empty.
+	 * @param lo the lower index, must lie inside the array.
+	 * @param hi the higher index, must lie inside the array.
+	 */
+	public static void sort2(int[] input, int lo, int hi) {
+		if (input == null || input.length < 2 || hi <= lo)
+			return;
+
+		if (lo < 0 || lo >= input.length || hi < 0 || hi >= input.length)
+			throw new IllegalArgumentException(
+					"lo or hi lie outside input array");
+
+		int index = partition2(input, lo, hi);
+		sort2(input, lo, index - 1);
+		sort2(input, index + 1, hi);
+	}
+
+	/**
+	 * partition input[lo..hi] by taking input[lo] as the pivot, provided that
+	 * hi >= lo.
+	 * 
+	 * @param input an integer array, cannot be null
+	 * @param lo the lower index, must lie inside array.
+	 * @param hi the higher index, must lie insider array.
+	 * @return final position of pivot element and rearranges the input array
+	 *         such that input[lo..index] <= input[index] (=pivot) <
+	 *         input[index+1..hi].
+	 */
+	public static int partition2(int[] input, int lo, int hi) {
+		if (input == null)
+			throw new IllegalArgumentException("input is null.");
+		if (hi < lo)
+			throw new IllegalArgumentException("hi is less than lo");
+		if (hi < 0 || hi >= input.length || lo < 0 || lo >= input.length)
+			throw new IllegalArgumentException(
+					"hi or lo lie outside the array input");
+
+		int pivot = input[lo];
+		int left = lo;
+
+		// Invariant: 1. input[lo..left] <= pivot 2. input[left+1..right-1] >
+		// pivot 3. input[lo] = pivot.
+		// input[right..hi] is yet to be explored, when loop exits right > hi so
+		// all elements in the array are explored.
+		for (int right = lo + 1; right <= hi; right++) {
+			if (input[right] <= pivot) {
+				left++;
+				Swap.swap(input, left, right);
+			}
+		}
+
+		Swap.swap(input, left, lo);
+		return left;
+	}
+
+	/**
 	 * Testing for {@link QuickSort} methods.
 	 * 
 	 * @param args the command line arguments.
@@ -116,6 +189,10 @@ public class QuickSort {
 		int[] d = { 41, 9 };
 		sort(d);
 		System.out.println(Arrays.toString(d));
+
+		int[] e = { 13, 19, 9, 5, 12, 8, 7, 4, 21, 2, 6, 11 };
+		sort2(e);
+		System.out.println(Arrays.toString(e));
 	}
 
 }
